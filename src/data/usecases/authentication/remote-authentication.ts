@@ -1,12 +1,12 @@
-import { HttpPostClient } from "../../protocols/http";
+import { HttpPostClient } from '../../protocols/http';
 
 export class RemoteAuthentication {
-  constructor(
+	constructor(
     private readonly url: string,
-    private readonly HttpPostClient: HttpPostClient
-  ) {}
+    private readonly httpPostClient: HttpPostClient
+	) {}
 
-  async auth(): Promise<void> {
-    await this.HttpPostClient.post(this.url);
-  }
+	async auth(): Promise<void> {
+		await this.httpPostClient.post(this.url);
+	}
 }
