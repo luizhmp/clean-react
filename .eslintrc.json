@@ -22,5 +22,6 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"]
-  }
+  },
+  "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
 }
