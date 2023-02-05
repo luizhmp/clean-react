@@ -1,6 +1,6 @@
-import { mockAuthentication } from '../../../domain/test';
-import { HttpPostClientSpy } from '../../test/mock-http-client';
-import { RemoteAuthentication } from './remote-authentication';
+import { mockAuthentication } from '@/domain/test';
+import { HttpPostClientSpy } from '@/data/test/mock-http-client';
+import { RemoteAuthentication } from '@/data/usecases/authentication';
 import { faker } from '@faker-js/faker';
 
 interface SutInterface {
