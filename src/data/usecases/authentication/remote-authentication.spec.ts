@@ -1,4 +1,4 @@
-import { HttpPostClientSpy } from '@/data/test/mock-http-client';
+import { HttpPostClientSpy } from '@/data/test';
 import { RemoteAuthentication } from '@/data/usecases/authentication';
 import { HttpStatusCode } from '@/data/protocols/http';
 import { AuthenticationParams } from '@/domain/usecases/authentication';
