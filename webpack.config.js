@@ -42,7 +42,7 @@ module.exports = {
     ],
   },
   devServer: {
-    static: './public',
+    static: { directory: './public' },
     devMiddleware: { writeToDisk: true },
     historyApiFallback: true,
   },
