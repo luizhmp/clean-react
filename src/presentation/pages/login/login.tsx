@@ -1,15 +1,11 @@
 import React from 'react';
 import Styles from './login-styles.scss';
-import { Logo, Spinner } from '@/presentation/components';
+import { Footer, LoginHeader, Spinner } from '@/presentation/components';
 
 export function Login(): JSX.Element {
   return (
     <div className={Styles.login}>
-      <header className={Styles.header}>
-        <Logo />
-        <h1>4Dev - Enquetes para Programadores</h1>
-      </header>
-
+      <LoginHeader />
       <form className={Styles.form}>
         <h2>Login</h2>
 
@@ -35,7 +31,7 @@ export function Login(): JSX.Element {
         </div>
       </form>
 
-      <footer className={Styles.footer} />
+      <Footer />
     </div>
   );
 }
