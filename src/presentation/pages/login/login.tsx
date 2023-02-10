@@ -1,6 +1,11 @@
 import React from 'react';
 import Styles from './login-styles.scss';
-import { Footer, Input, LoginHeader, Spinner } from '@/presentation/components';
+import {
+  Footer,
+  FormStatus,
+  Input,
+  LoginHeader,
+} from '@/presentation/components';
 
 export function Login(): JSX.Element {
   return (
@@ -19,10 +24,7 @@ export function Login(): JSX.Element {
 
         <span className={Styles.link}>Criar conta</span>
 
-        <div className={Styles.errorWrap}>
-          <Spinner className={Styles.spinner} />
-          <span className={Styles.error}>Erro</span>
-        </div>
+        <FormStatus />
       </form>
 
       <Footer />
