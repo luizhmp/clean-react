@@ -1,6 +1,6 @@
 import React from 'react';
 import Styles from './login-styles.scss';
-import { Footer, LoginHeader, Spinner } from '@/presentation/components';
+import { Footer, Input, LoginHeader, Spinner } from '@/presentation/components';
 
 export function Login(): JSX.Element {
   return (
@@ -9,15 +9,9 @@ export function Login(): JSX.Element {
       <form className={Styles.form}>
         <h2>Login</h2>
 
-        <div className={Styles.inputWrap}>
-          <input type="email" name="email" placeholder="Digite seu e-mail" />
-          <span className={Styles.status}>🔴</span>
-        </div>
+        <Input type="email" name="email" placeholder="Digite seu e-mail" />
 
-        <div className={Styles.inputWrap}>
-          <input type="password" name="senha" placeholder="Digite sua senha" />
-          <span className={Styles.status}>🔴</span>
-        </div>
+        <Input type="password" name="senha" placeholder="Digite sua senha" />
 
         <button className={Styles.submit} type="submit">
           Entrar
