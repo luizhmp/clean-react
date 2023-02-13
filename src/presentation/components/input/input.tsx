@@ -5,7 +5,7 @@ import { InputPropsInterface } from './types';
 export function Input(otherInputProps: InputPropsInterface): JSX.Element {
   return (
     <div className={Styles.inputWrap}>
-      <input {...otherInputProps} />
+      <input {...otherInputProps} autoComplete="off" />
       <span className={Styles.status}>🔴</span>
     </div>
   );
