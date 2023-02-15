@@ -14,6 +14,7 @@ export function Login({ validation }: LoginPropsInterface): JSX.Element {
   const [state, setState] = useState<StateInterface>({
     isLoading: false,
     email: '',
+    password: '',
     emailError: 'Campo obrigatório',
     passwordError: 'Campo obrigatório',
     mainError: '',
@@ -22,6 +23,10 @@ export function Login({ validation }: LoginPropsInterface): JSX.Element {
   useEffect(() => {
     validation?.validate({ email: state.email });
   }, [state.email]);
+
+  useEffect(() => {
+    validation?.validate({ password: state.password });
+  }, [state.password]);
 
   return (
     <div className={Styles.login}>

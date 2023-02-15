@@ -7,6 +7,7 @@ export interface LoginPropsInterface {
 export interface StateInterface {
   isLoading: boolean;
   email: string;
+  password: string;
   emailError: string;
   passwordError: string;
   mainError: string;
