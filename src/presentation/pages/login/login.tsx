@@ -8,25 +8,34 @@ import {
 } from '@/presentation/components';
 import { FormContext } from '@/presentation/contexts/form';
 
-import { StatePropsInterface } from './types';
+import { ErrorStateInterface, StateInterface } from './types';
 
 export function Login(): JSX.Element {
-  const [state] = useState<StatePropsInterface>({
+  const [state] = useState<StateInterface>({
     isLoading: false,
-    errorMessage: '',
+  });
+
+  const [errorState] = useState<ErrorStateInterface>({
+    email: 'Campo obrigatório',
+    password: 'Campo obrigatório',
+    mainError: '',
   });
 
   return (
     <div className={Styles.login}>
       <LoginHeader />
 
-      <FormContext.Provider value={state}>
+      <FormContext.Provider value={{ state, errorState }}>
         <form className={Styles.form}>
           <h2>Login</h2>
 
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
 
-          <Input type="password" name="senha" placeholder="Digite sua senha" />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Digite sua senha"
+          />
 
           <button
             data-testid="submit"

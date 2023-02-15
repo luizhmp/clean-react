@@ -1,4 +1,9 @@
-export interface StatePropsInterface {
+export interface StateInterface {
   isLoading: boolean;
-  errorMessage: string;
+}
+
+export interface ErrorStateInterface {
+  email: string;
+  password: string;
+  mainError: string;
 }

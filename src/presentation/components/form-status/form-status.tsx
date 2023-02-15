@@ -4,7 +4,10 @@ import { Spinner } from '@/presentation/components/spinner';
 import { FormContext } from '@/presentation/contexts/form';
 
 export function FormStatus(): JSX.Element {
-  const { isLoading, errorMessage } = useContext(FormContext);
+  const {
+    state: { isLoading },
+    errorState: { mainError },
+  } = useContext(FormContext);
 
   function renderSpinner() {
     if (!isLoading) {
@@ -15,13 +18,13 @@ export function FormStatus(): JSX.Element {
   }
 
   function renderError() {
-    const hasError = errorMessage.length > 0;
+    const hasError = mainError.length > 0;
 
     if (!hasError) {
       return null;
     }
 
-    return <span className={Styles.error}>{errorMessage}</span>;
+    return <span className={Styles.error}>{mainError}</span>;
   }
 
   return (
