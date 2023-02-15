@@ -4,11 +4,18 @@ import Styles from './input-styles.scss';
 import { InputPropsInterface } from './types';
 
 export function Input({
-  name,
   ...otherInputProps
 }: InputPropsInterface): JSX.Element {
-  const { errorState } = useContext(FormContext);
-  const error = errorState[name];
+  const { state, setState } = useContext(FormContext);
+  const error = state[`${otherInputProps.name}Error`];
+
+  function handleChange(event: React.FocusEvent<HTMLInputElement>): void {
+    setState({
+      ...state,
+      [event.target.name]: event.target.value,
+    });
+    console.log('eventTarget', event.target);
+  }
 
   function getStatus(): string {
     return '🔴';
@@ -18,11 +25,18 @@ export function Input({
     return error;
   }
 
+  console.log(otherInputProps);
+
   return (
     <div className={Styles.inputWrap}>
-      <input {...otherInputProps} autoComplete="off" />
+      <input
+        {...otherInputProps}
+        data-testid={otherInputProps.name}
+        autoComplete="off"
+        onChange={handleChange}
+      />
       <span
-        data-testid={`${name}-status`}
+        data-testid={`${otherInputProps.name}-status`}
         title={getTitle()}
         className={Styles.status}
       >

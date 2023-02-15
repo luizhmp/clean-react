@@ -5,8 +5,7 @@ import { FormContext } from '@/presentation/contexts/form';
 
 export function FormStatus(): JSX.Element {
   const {
-    state: { isLoading },
-    errorState: { mainError },
+    state: { isLoading, mainError },
   } = useContext(FormContext);
 
   function renderSpinner() {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Styles from './login-styles.scss';
 import {
   Footer,
@@ -8,24 +8,26 @@ import {
 } from '@/presentation/components';
 import { FormContext } from '@/presentation/contexts/form';
 
-import { ErrorStateInterface, StateInterface } from './types';
+import { LoginPropsInterface, StateInterface } from './types';
 
-export function Login(): JSX.Element {
-  const [state] = useState<StateInterface>({
+export function Login({ validation }: LoginPropsInterface): JSX.Element {
+  const [state, setState] = useState<StateInterface>({
     isLoading: false,
-  });
-
-  const [errorState] = useState<ErrorStateInterface>({
-    email: 'Campo obrigatório',
-    password: 'Campo obrigatório',
+    email: '',
+    emailError: 'Campo obrigatório',
+    passwordError: 'Campo obrigatório',
     mainError: '',
   });
+
+  useEffect(() => {
+    validation?.validate({ email: state.email });
+  }, [state.email]);
 
   return (
     <div className={Styles.login}>
       <LoginHeader />
 
-      <FormContext.Provider value={{ state, errorState }}>
+      <FormContext.Provider value={{ state, setState }}>
         <form className={Styles.form}>
           <h2>Login</h2>
 
