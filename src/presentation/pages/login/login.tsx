@@ -10,7 +10,10 @@ import { FormContext } from '@/presentation/contexts/form';
 
 import { LoginPropsInterface, StateInterface } from './types';
 
-export function Login({ validation }: LoginPropsInterface): JSX.Element {
+export function Login({
+  validation,
+  authentication,
+}: LoginPropsInterface): JSX.Element {
   const [state, setState] = useState<StateInterface>({
     isLoading: false,
     email: '',
@@ -30,12 +33,18 @@ export function Login({ validation }: LoginPropsInterface): JSX.Element {
 
   const isDisabled = !!state.emailError || !!state.passwordError;
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
     event.preventDefault();
 
     setState({
       ...state,
       isLoading: true,
+    });
+    await authentication.auth({
+      email: state.email,
+      password: state.password,
     });
   }
 
