@@ -4,7 +4,10 @@ import { SpinnerPropsInterface } from './types';
 
 export function Spinner({ className }: SpinnerPropsInterface): JSX.Element {
   return (
-    <div className={[Styles.spinner, className].join(' ')}>
+    <div
+      data-testid="spinner"
+      className={[Styles.spinner, className].join(' ')}
+    >
       <div />
       <div />
       <div />
