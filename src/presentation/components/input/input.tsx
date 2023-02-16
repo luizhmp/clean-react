@@ -18,11 +18,17 @@ export function Input({
   }
 
   function getStatus(): string {
-    return '🔴';
+    if (error) {
+      return '🔴';
+    }
+    return '🟢';
   }
 
   function getTitle(): string {
-    return error;
+    if (error) {
+      return error;
+    }
+    return 'Tudo certo!';
   }
 
   console.log(otherInputProps);
