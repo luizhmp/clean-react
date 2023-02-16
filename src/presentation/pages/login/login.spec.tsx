@@ -7,10 +7,25 @@ import {
 } from '@testing-library/react';
 import { Login } from './login';
 import { ValidationStub } from '@/presentation/test';
+import { Authentication, AuthenticationParams } from '@/domain/usecases';
+import { AccountModel } from '@/domain/models';
 import { faker } from '@faker-js/faker';
+import { mockAccountModel } from '@/domain';
+
+class AuthenticationSpy implements Authentication {
+  account = mockAccountModel();
+
+  params: AuthenticationParams;
+
+  async auth(params: AuthenticationParams): Promise<AccountModel> {
+    this.params = params;
+    return Promise.resolve(this.account);
+  }
+}
 
 interface SutInterface {
   sut: RenderResult;
+  authenticationSpy: AuthenticationSpy;
 }
 
 interface SutParams {
@@ -19,12 +34,16 @@ interface SutParams {
 
 const makeSut = (params?: SutParams): SutInterface => {
   const validationStub = new ValidationStub();
+  const authenticationSpy = new AuthenticationSpy();
   validationStub.errorMessage = params?.validationError;
 
-  const sut = render(<Login validation={validationStub} />);
+  const sut = render(
+    <Login validation={validationStub} authentication={authenticationSpy} />
+  );
 
   return {
     sut,
+    authenticationSpy,
   };
 };
 
@@ -131,5 +150,27 @@ describe('Login Component', () => {
     const spinner = sut.getByTestId('spinner');
 
     expect(spinner).toBeTruthy();
+  });
+
+  test('Should call Authentication with correct values', () => {
+    const { sut, authenticationSpy } = makeSut();
+    const passwordInput = sut.getByTestId('password');
+    const emailInput = sut.getByTestId('email');
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+    fireEvent.change(emailInput, {
+      target: { value: email },
+    });
+    fireEvent.change(passwordInput, {
+      target: { value: password },
+    });
+
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement;
+    fireEvent.click(submitButton);
+
+    expect(authenticationSpy.params).toEqual({
+      email,
+      password,
+    });
   });
 });
