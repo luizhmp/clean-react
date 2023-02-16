@@ -14,7 +14,6 @@ export function Input({
       ...state,
       [event.target.name]: event.target.value,
     });
-    console.log('eventTarget', event.target);
   }
 
   function getStatus(): string {
@@ -30,8 +29,6 @@ export function Input({
     }
     return 'Tudo certo!';
   }
-
-  console.log(otherInputProps);
 
   return (
     <div className={Styles.inputWrap}>
