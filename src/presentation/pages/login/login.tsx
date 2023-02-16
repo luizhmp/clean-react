@@ -23,10 +23,12 @@ export function Login({ validation }: LoginPropsInterface): JSX.Element {
   useEffect(() => {
     setState({
       ...state,
-      emailError: validation.validate('email', state.email),
-      passwordError: validation.validate('password', state.password),
+      emailError: validation?.validate('email', state.email),
+      passwordError: validation?.validate('password', state.password),
     });
   }, [state.email, state.password]);
+
+  const isDisabled = !!state.emailError || !!state.passwordError;
 
   return (
     <div className={Styles.login}>
@@ -46,7 +48,7 @@ export function Login({ validation }: LoginPropsInterface): JSX.Element {
 
           <button
             data-testid="submit"
-            disabled
+            disabled={isDisabled}
             className={Styles.submit}
             type="submit"
           >
