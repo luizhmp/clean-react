@@ -38,7 +38,10 @@ export function Login({
   ): Promise<void> {
     event.preventDefault();
 
-    if (state.isLoading) {
+    const shouldReturn =
+      state.isLoading || state.emailError || state.passwordError;
+
+    if (shouldReturn) {
       return;
     }
 
@@ -57,7 +60,11 @@ export function Login({
       <LoginHeader />
 
       <FormContext.Provider value={{ state, setState }}>
-        <form className={Styles.form} onSubmit={handleSubmit}>
+        <form
+          data-testid="form"
+          className={Styles.form}
+          onSubmit={handleSubmit}
+        >
           <h2>Login</h2>
 
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
