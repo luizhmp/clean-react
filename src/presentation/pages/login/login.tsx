@@ -38,6 +38,10 @@ export function Login({
   ): Promise<void> {
     event.preventDefault();
 
+    if (state.isLoading) {
+      return;
+    }
+
     setState({
       ...state,
       isLoading: true,
