@@ -23,7 +23,11 @@ export function FormStatus(): JSX.Element {
       return null;
     }
 
-    return <span className={Styles.error}>{mainError}</span>;
+    return (
+      <span data-testid="main-error" className={Styles.error}>
+        {mainError}
+      </span>
+    );
   }
 
   return (

@@ -38,21 +38,29 @@ export function Login({
   ): Promise<void> {
     event.preventDefault();
 
-    const shouldReturn =
-      state.isLoading || state.emailError || state.passwordError;
+    try {
+      const shouldReturn =
+        state.isLoading || state.emailError || state.passwordError;
 
-    if (shouldReturn) {
-      return;
+      if (shouldReturn) {
+        return;
+      }
+
+      setState({
+        ...state,
+        isLoading: true,
+      });
+      await authentication.auth({
+        email: state.email,
+        password: state.password,
+      });
+    } catch (error) {
+      setState({
+        ...state,
+        isLoading: false,
+        mainError: error.message,
+      });
     }
-
-    setState({
-      ...state,
-      isLoading: true,
-    });
-    await authentication.auth({
-      email: state.email,
-      password: state.password,
-    });
   }
 
   return (
