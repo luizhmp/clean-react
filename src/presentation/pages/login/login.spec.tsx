@@ -1,9 +1,10 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import {
+  cleanup,
+  fireEvent,
   render,
   RenderResult,
-  fireEvent,
-  cleanup,
   waitFor,
 } from '@testing-library/react';
 import 'jest-localstorage-mock';
@@ -27,7 +28,9 @@ const makeSut = (params?: SutParams): SutInterface => {
   validationStub.errorMessage = params?.validationError;
 
   const sut = render(
-    <Login validation={validationStub} authentication={authenticationSpy} />
+    <BrowserRouter>
+      <Login validation={validationStub} authentication={authenticationSpy} />
+    </BrowserRouter>
   );
 
   return {
@@ -208,5 +211,13 @@ describe('Login Component', () => {
     await waitFor(() => sut.getByTestId('form'));
 
     expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  test.only('Should go to signup page', async () => {
+    const { sut } = makeSut();
+    const signup = sut.getByTestId('signup');
+    fireEvent.click(signup);
+
+    expect(location.pathname).toEqual('/signup');
   });
 });
