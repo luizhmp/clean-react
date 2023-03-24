@@ -206,18 +206,23 @@ describe('Login Component', () => {
 
   test('Should add accessToken to localStorage on success', async () => {
     const { sut } = makeSut();
+
     simulateValidSubmit(sut);
 
     await waitFor(() => sut.getByTestId('form'));
 
+    expect(history.length).toEqual(1);
     expect(localStorage.setItem).toHaveBeenCalled();
+    expect(location.pathname).toEqual('/');
   });
 
-  test.only('Should go to signup page', async () => {
+  test('Should go to signup page', () => {
     const { sut } = makeSut();
+
     const signup = sut.getByTestId('signup');
     fireEvent.click(signup);
 
+    expect(history.length).toEqual(2);
     expect(location.pathname).toEqual('/signup');
   });
 });
