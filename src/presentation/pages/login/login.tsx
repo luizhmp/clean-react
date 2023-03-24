@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Styles from './login-styles.scss';
 import {
   Footer,
@@ -10,11 +10,13 @@ import {
 import { FormContext } from '@/presentation/contexts/form';
 
 import { LoginPropsInterface, StateInterface } from './types';
+import { act } from 'react-dom/test-utils';
 
 export function Login({
   validation,
   authentication,
 }: LoginPropsInterface): JSX.Element {
+  const navigate = useNavigate();
   const [state, setState] = useState<StateInterface>({
     isLoading: false,
     email: '',
@@ -57,6 +59,7 @@ export function Login({
       });
 
       localStorage.setItem('accessToken', account.accessToken);
+      act(() => navigate('/', { replace: true }));
     } catch (error) {
       setState({
         ...state,
