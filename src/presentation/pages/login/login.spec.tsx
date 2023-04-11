@@ -8,7 +8,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import 'jest-localstorage-mock';
-import { Login } from './login';
+import { Login } from '@/presentation/pages';
 import { AuthenticationSpy, ValidationStub } from '@/presentation/test';
 import { faker } from '@faker-js/faker';
 import { InvalidCredentialsError } from '@/domain/errors';
