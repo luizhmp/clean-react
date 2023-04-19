@@ -10,11 +10,11 @@ import {
 import { FormContext } from '@/presentation/contexts/form';
 
 import { LoginPropsInterface, StateInterface } from './types';
-import { act } from 'react-dom/test-utils';
 
 export function Login({
   validation,
   authentication,
+  saveAccessToken,
 }: LoginPropsInterface): JSX.Element {
   const navigate = useNavigate();
   const [state, setState] = useState<StateInterface>({
@@ -57,9 +57,8 @@ export function Login({
         email: state.email,
         password: state.password,
       });
-
-      localStorage.setItem('accessToken', account.accessToken);
-      act(() => navigate('/', { replace: true }));
+      await saveAccessToken.save(account.accessToken);
+      navigate('/', { replace: true });
     } catch (error) {
       setState({
         ...state,
