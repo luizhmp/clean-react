@@ -7,15 +7,19 @@ import {
   RenderResult,
   waitFor,
 } from '@testing-library/react';
-import 'jest-localstorage-mock';
 import { Login } from '@/presentation/pages';
-import { AuthenticationSpy, ValidationStub } from '@/presentation/test';
+import {
+  AuthenticationSpy,
+  SaveAccessTokenMock,
+  ValidationStub,
+} from '@/presentation/test';
 import { faker } from '@faker-js/faker';
 import { InvalidCredentialsError } from '@/domain/errors';
 
 interface SutInterface {
   sut: RenderResult;
   authenticationSpy: AuthenticationSpy;
+  saveAccessTokenMock: SaveAccessTokenMock;
 }
 
 interface SutParams {
@@ -26,16 +30,22 @@ const makeSut = (params?: SutParams): SutInterface => {
   const validationStub = new ValidationStub();
   const authenticationSpy = new AuthenticationSpy();
   validationStub.errorMessage = params?.validationError;
+  const saveAccessTokenMock = new SaveAccessTokenMock();
 
   const sut = render(
     <BrowserRouter>
-      <Login validation={validationStub} authentication={authenticationSpy} />
+      <Login
+        validation={validationStub}
+        authentication={authenticationSpy}
+        saveAccessToken={saveAccessTokenMock}
+      />
     </BrowserRouter>
   );
 
   return {
     sut,
     authenticationSpy,
+    saveAccessTokenMock,
   };
 };
 
@@ -123,9 +133,6 @@ const testElementText = (
 
 describe('Login Component', () => {
   afterEach(cleanup);
-  beforeEach(() => {
-    localStorage.clear();
-  });
 
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
@@ -222,13 +229,15 @@ describe('Login Component', () => {
     testErrorWrapChildCount(sut, 1);
   });
 
-  test('Should add accessToken to localStorage on success', async () => {
-    const { sut } = makeSut();
+  test('Should call SaveAccessToken on success', async () => {
+    const { sut, authenticationSpy, saveAccessTokenMock } = makeSut();
 
     await simulateValidSubmit(sut);
 
+    expect(saveAccessTokenMock.accessToken).toBe(
+      authenticationSpy.account.accessToken
+    );
     expect(history.length).toEqual(1);
-    expect(localStorage.setItem).toHaveBeenCalled();
     expect(location.pathname).toEqual('/');
   });
 
